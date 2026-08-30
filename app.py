@@ -79,6 +79,9 @@ def init_db():
     db.commit()
     db.close()
 
+# 模块加载时自动初始化数据库（确保 WSGI/gunicorn 启动时也能建表）
+init_db()
+
 # ---------------- 工具 ----------------
 def is_spider_ua(ua):
     ua = (ua or '').lower()
