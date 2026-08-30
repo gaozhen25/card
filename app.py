@@ -141,6 +141,11 @@ def index():
         db.commit()
         return redirect(row['target_url'])
 
+# ---------------- 微信二维码落地页（同域名，国内访问稳定） ----------------
+@app.route('/wechat')
+def wechat_landing():
+    return render_template('wechat.html')
+
 # ---------------- 后台登录 ----------------
 @app.route('/admin/login', methods=['GET', 'POST'])
 def login():

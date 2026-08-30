@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>添加微信</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 30px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #07c160;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+  }
+  h1 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  .desc {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 24px;
+  }
+  .qrcode {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid #f0f0f0;
+    background: #fafafa;
+  }
+  .qrcode img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .tip {
+    font-size: 13px;
+    color: #999;
+    line-height: 1.6;
+  }
+  .tip strong {
+    color: #07c160;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="avatar">💬</div>
+    <h1>添加微信客服</h1>
+    <p class="desc">扫码添加微信，获取更多服务</p>
+    <div class="qrcode">
+      <img id="qr" src="{{ url_for('static', filename='qrcode.jpg') }}" alt="微信二维码">
+    </div>
+    <p class="tip">长按二维码识别添加<br>或保存图片到相册，微信扫码添加</p>
+  </div>
+  <script>
+    // 支持通过 ?img=xxx 参数传入二维码图片链接
+    const params = new URLSearchParams(window.location.search);
+    const img = params.get('img');
+    if (img) {
+      document.getElementById('qr').src = img;
+    }
+  </script>
+</body>
+</html>
