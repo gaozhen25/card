@@ -28,7 +28,43 @@ python3 app.py
 - 默认账号：`admin` / `123456`
 - 前台卡片入口：http://127.0.0.1:8000/?id=卡片ID
 
-## Render 部署（推荐，免费公网 HTTPS）
+## Koyeb 部署（推荐，无需信用卡）
+
+Koyeb 免费实例不需要绑定信用卡，支持从 GitHub 直接部署，自动给 `https://xxx.koyeb.app` 域名。
+
+### 前置准备
+1. 注册 Koyeb 账号：https://app.koyeb.com （用 GitHub 登录）
+2. 代码已推送到 GitHub 仓库
+
+### 部署步骤
+1. 登录 Koyeb，点左上角「**Create Web Service**」
+2. 选择「**GitHub**」，连接你的 GitHub 账号，选择仓库 `gaozhen25/card`
+3. Branch 选 `main`
+4. Builder 选择「**Dockerfile**」（项目根目录已有 Dockerfile）
+5. 点「**Next**」
+6. Service name 填 `wailian-card`（或任意名字）
+7. Region 选 `Frankfurt` 或 `Singapore`（离国内近点）
+8. Instance type 选「**Free**」（免费实例）
+9. 点「**Advanced**」->「**Environment variables**」，添加：
+   - `ADMIN_USER` = `admin`
+   - `ADMIN_PASS` = `123456`
+   - `SECRET_KEY` = 随便填一串随机字符（比如 `your-secret-key-change-me-123456`）
+10. 点「**Deploy**」，等待构建完成（约 2-3 分钟）
+11. 部署完成后，得到 `https://xxx.koyeb.app` 域名
+
+### 部署后验证
+- 后台：`https://xxx.koyeb.app/admin`
+- 账号：`admin`，密码：`123456`
+- 登录后新增卡片，复制链接发到抖音/小红书私信测试
+
+### ⚠️ 数据持久化
+Koyeb 免费实例的文件系统也是临时的，重启后 `data.db` 会重置。
+- 测试用：免费版直接用，重启数据清空
+- 正式用：升级付费实例并挂载持久化卷，或接入外部数据库
+
+---
+
+## Render 部署（需信用卡）
 
 ### 前置准备
 1. 注册 Render 账号：https://render.com （用 GitHub 登录）
