@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box">
+    <div class="box-header">
+        <h3>{{ '编辑卡片' if cid>0 else '新增卡片' }}</h3>
+        <a class="btn" href="{{ url_for('admin_index') }}">返回列表</a>
+    </div>
+    <form method="post">
+        <div class="form-item"><label>卡片标题</label><input type="text" name="title" value="{{ data['title'] }}" required></div>
+        <div class="form-item"><label>卡片描述</label><textarea name="desc" rows="3">{{ data['desc'] }}</textarea></div>
+        <div class="form-item"><label>封面图片（必须 HTTPS 完整 URL，平台抓取用）</label><input type="text" name="cover_img" value="{{ data['cover_img'] }}" placeholder="https://example.com/a.jpg"></div>
+        <div class="form-item"><label>跳转目标地址（填你的活码 / 落地页链接）</label><input type="text" name="target_url" value="{{ data['target_url'] }}" required></div>
+        <div class="form-item"><label>访问上限（0=不限）</label><input type="number" name="max_visit" value="{{ data['max_visit'] }}"></div>
+        <div class="form-item"><label>过期时间（留空=永不过期，格式 2026-12-31 23:59:59）</label><input type="text" name="expire_time" value="{{ data['expire_time'] }}"></div>
+        <div class="form-item"><label>启用 IP 黑名单</label>
+            <select name="enable_blackip">
+                <option value="0" {{ 'selected' if data['enable_blackip']==0 }}>关闭</option>
+                <option value="1" {{ 'selected' if data['enable_blackip']==1 }}>开启</option>
+            </select>
+        </div>
+        <div class="form-item"><label>状态</label>
+            <select name="status">
+                <option value="1" {{ 'selected' if data['status']==1 }}>启用</option>
+                <option value="0" {{ 'selected' if data['status']==0 }}>关闭</option>
+            </select>
+        </div>
+        <div class="form-item">
+            <button class="btn btn-primary" type="submit">保存</button>
+            <a class="btn" href="{{ url_for('admin_index') }}">取消</a>
+        </div>
+    </form>
+</div>
+<style>
+.form-item{margin-bottom:14px}
+.form-item label{display:block;margin-bottom:5px;font-size:14px;color:#333;font-weight:500}
+.form-item input,.form-item select,.form-item textarea{width:100%;padding:9px;border:1px solid #d9d9d9;border-radius:4px;box-sizing:border-box;font-size:14px}
+.form-item textarea{resize:vertical}
+</style>
+{% endblock %}

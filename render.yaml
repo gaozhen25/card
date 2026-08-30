@@ -1,0 +1,33 @@
+# Render Blueprint 部署配置
+# 使用方法：在 Render  Dashboard -> New -> Blueprint -> 连接你的 Git 仓库
+# 或直接访问 https://dashboard.render.com/blueprints 导入
+#
+# 注意：免费版实例没有持久化磁盘，重启/重新部署后 SQLite 数据会丢失。
+# 如需数据持久化，取消下面 disk 部分的注释（需付费计划，$1/月起）。
+
+services:
+  - type: web
+    name: wailian-card
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: ADMIN_PASS
+        value: "123456"  # 固定后台登录密码
+      - key: ADMIN_USER
+        value: "admin"
+      - key: SECRET_KEY
+        generateValue: true
+      # 如需持久化数据，取消下面两行注释，并取消 disk 部分注释
+      # - key: DATABASE_PATH
+      #   value: /var/data/data.db
+
+    # 持久化磁盘（付费计划，免费版请删除此段）
+    # disk:
+    #   name: data
+    #   mountPath: /var/data
+    #   sizeGB: 1

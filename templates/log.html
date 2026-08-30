@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="box">
+    <div class="box-header">
+        <h3>访问日志{% if card_id %}（卡片 ID:{{ card_id }}）{% endif %}</h3>
+        <a class="btn" href="{{ url_for('admin_index') }}">返回列表</a>
+    </div>
+    {% if list_ %}
+    <table>
+        <thead>
+        <tr><th>ID</th><th>卡片ID</th><th>IP</th><th>爬虫</th><th>UA</th><th>时间</th></tr>
+        </thead>
+        <tbody>
+        {% for v in list_ %}
+        <tr>
+            <td>{{ v['id'] }}</td>
+            <td>{{ v['card_id'] }}</td>
+            <td>{{ v['ip'] }}</td>
+            <td>{{ '是' if v['is_spider'] else '否' }}</td>
+            <td style="max-width:360px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="{{ v['ua'] }}">{{ v['ua'] }}</td>
+            <td>{{ v['create_time']|fmt_time }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pager">
+        共 {{ total }} 条，第 {{ page }}/{{ total_page }} 页
+        {% for p in range(1, total_page+1) %}
+        <a href="{{ url_for('admin_log', card_id=card_id, page=p) }}">{{ p }}</a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty">暂无访问日志</div>
+    {% endif %}
+</div>
+{% endblock %}
