@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="card">
+    <view class="avatar">💬</view>
+    <view class="title">添加微信客服</view>
+    <view class="desc">扫码添加微信，获取更多服务</view>
+
+    <view class="qrcode-box" bindtap="previewQrcode">
+      <image class="qrcode" src="{{wechatQrcode}}" mode="aspectFit" show-menu-by-longpress="{{true}}"></image>
+    </view>
+
+    <view class="tip">长按二维码识别添加</view>
+    <view class="tip">或保存图片到相册，微信扫码添加</view>
+
+    <view class="divider"></view>
+
+    <view class="wechat-id-box">
+      <text class="wechat-id-label">微信号：</text>
+      <text class="wechat-id">{{wechatId}}</text>
+    </view>
+
+    <button class="copy-btn" bindtap="copyWechatId">复制微信号</button>
+    <button class="save-btn" bindtap="saveQrcode">保存二维码到相册</button>
+  </view>
+</view>
